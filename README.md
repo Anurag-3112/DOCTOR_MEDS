@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Doctor Meds Logo" width="200"/>
+  <img src="assets/logo.png" alt="Doctor Meds Logo" style="width:80%; max-width:1000px; min-width:300px;" />
 </p>
 
 # 🏥 DOCTOR_MEDS
