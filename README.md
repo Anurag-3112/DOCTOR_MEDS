@@ -26,5 +26,5 @@ A RESTful API for managing hospital operations including patient appointments, d
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/krishnam2003/DOCTOR_MEDS.git
+   git clone https://github.com/Anurag-3112/DOCTOR_MEDS.git
    cd DOCTOR_MEDS
