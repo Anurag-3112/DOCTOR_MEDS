@@ -111,3 +111,11 @@ DOCTOR_MEDS/
 │
 └── README.md # Project documentation
 ```
+
+## 📬 Contact
+
+For any queries, feedback, or collaboration opportunities, feel free to reach out:
+
+👤 **Anurag Kumar**  
+📧 Email: [click here](mailto:ak7546824@gmail.com)  
+🔗 GitHub: [@Anurag-3112](https://github.com/Anurag-3112)
