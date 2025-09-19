@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="Doctor Meds Logo" style="width:80%; max-width:1000px; min-width:300px;" />
 </p> -->
 
-# 🏥 DOCTOR_MEDS
+# 🏥 DOCTOR_MEDS 
 
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-brightgreen)
