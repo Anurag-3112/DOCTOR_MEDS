@@ -7,13 +7,13 @@ import SignUp from './components/Signup';
 import Patient from './components/Patient';
 import Doctor from './components/Doctors';
 import Admin from './components/Admins';
-import DiseasePrediction from './components/DiseasePredictor';
+import DiseasePrediction from './components/DiseasePredictor'; 
 
-function App() {
+function App() { 
   return (
     <Router>
       <div className="App">
-        <Routes>
+        <Routes> 
           <Route path="/" element={<Home />} />
           <Route path="/predict" element={<DiseasePrediction />} />
           <Route path="/login" element={<Login />} />
