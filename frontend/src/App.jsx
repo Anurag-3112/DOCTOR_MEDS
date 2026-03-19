@@ -20,7 +20,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/patient" element={<Patient />} />
           <Route path="/doctor" element={<Doctor />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} />  
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
