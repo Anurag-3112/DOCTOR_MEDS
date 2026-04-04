@@ -45,7 +45,7 @@ const Home = () => {
       <header className="flex items-center justify-between px-6 py-4 bg-white">
         <div className="flex items-center gap-2">
           <Hospital className="w-8 h-8 text-blue-600" />
-          <span className="text-3xl font-bold">DOCTOR-MEDS</span>
+          <span className="text-3xl font-bold">MediCare</span>
         </div>
         <nav className="flex items-center gap-4">
           <Button primary onClick={() => handleButtonClick('/login')}>Login</Button>
@@ -61,7 +61,7 @@ const Home = () => {
         Streamline Your Health Journey
       </h1>
       <p className="text-xl text-white mb-10 text-left">
-        DOCTOR-MEDS system helps you optimize patient care, organizing medical records with ease, and improving overall efficiency.
+        MediCare system helps you optimize patient care, organizing medical records with ease, and improving overall efficiency.
       </p>
 
       {/* Buttons Container */}
@@ -98,7 +98,7 @@ const Home = () => {
             <div>
               <h2 className="text-3xl font-bold mb-4 text-left">Patient Care from registration and disease prediction to follow-up</h2>
               <p className="text-xl text-gray-600 mb-8 text-left">
-                DOCTOR-MEDS system provides cutting-edge features to streamline your workflows, improve
+                MediCare system provides cutting-edge features to streamline your workflows, improve
                 patient satisfaction, and drive better outcomes.
               </p>
               <div className="flex gap-4 justify-left">
@@ -111,7 +111,7 @@ const Home = () => {
 
         <Section>
           <h2 className="text-3xl font-bold mb-12 text-center">
-            DOCTOR-MEDS INCLUDES
+            MediCare INCLUDES
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
@@ -148,19 +148,19 @@ const Home = () => {
       {/* Email */}
       <div className="flex items-center">
         <span className="mr-2">📧</span>
-        <span>krishnam@gmail.com</span>
+        <span>Anurag@gmail.com</span>
       </div>
 
       {/* Location */}
       <div className="flex items-center">
         <span className="mr-2">📍</span>
-        <span>VIT Bhopal University, Kothri Kalan, M.P, 466114</span>
+        <span>Jabalpur, M.P, 482020</span>
       </div>
     </div>
 
     {/* Footer Note */}
     <p className="text-sm">
-    DOCTOR-MEDS, inc, &copy; 2024, All rights reserved.
+    MediCare, inc, &copy; 2024, All rights reserved.
     </p>
   </div>
 </div>

@@ -5,13 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Button = ({ children, variant = 'primary', className = '', ...props }) => (
   <button
-    className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-      variant === 'primary'
-        ? 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
-        : variant === 'outline'
+    className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${variant === 'primary'
+      ? 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+      : variant === 'outline'
         ? 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
         : 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
-    } ${className}`}
+      } ${className}`}
     {...props}
   >
     {children}
@@ -67,6 +66,7 @@ const Select = ({ children, ...props }) => (
 );
 
 export default function PatientDashboard() {
+
   const [showAppointments, setShowAppointments] = useState(false);
   const [showPrescriptions, setShowPrescriptions] = useState(false);
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -97,22 +97,33 @@ export default function PatientDashboard() {
   const fetchPatientProfile = async () => {
     try {
       const token = localStorage.getItem('token');
+
+      console.log("TOKEN FROM STORAGE:", token); // 👈 ADD
+
       if (!token) {
         navigate('/login');
         return;
       }
+
       const response = await fetch('http://localhost:5000/api/patient/profile', {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // 🔥 IMPORTANT
         }
       });
+
+      console.log("RESPONSE STATUS:", response.status); // 👈 ADD
+
       if (response.ok) {
         const data = await response.json();
+        console.log("PROFILE DATA:", data); // 👈 ADD
         setPatientInfo(data);
         setEditedInfo(data);
       } else {
-        console.error('Failed to fetch patient profile');
+        console.error("Failed:", response.status);
       }
+
     } catch (error) {
       console.error('Error fetching patient profile:', error);
     }
@@ -253,8 +264,8 @@ export default function PatientDashboard() {
             )}
           </CardContent>
           <CardFooter className="p-2">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="w-full text-sm text-gray-500 hover:text-gray-900 transition-colors"
               onClick={() => setShowAppointments(!showAppointments)}
             >
@@ -275,7 +286,11 @@ export default function PatientDashboard() {
                         {appointment.reason}
                       </p>
                     </div>
-                    <p className="text-sm">{appointment.time}</p>
+                    <p className="text-sm"><span>
+                      {new Date(appointment.date).toLocaleDateString('en-IN', {
+                        day: 'numeric', month: 'short', year: 'numeric'
+                      })} at {appointment.time}
+                    </span></p>
                   </div>
                 ))
               ) : (
@@ -295,8 +310,8 @@ export default function PatientDashboard() {
             <p className="text-xs text-gray-500">Active prescriptions</p>
           </CardContent>
           <CardFooter className="p-2">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="w-full text-sm text-gray-500 hover:text-gray-900 transition-colors"
               onClick={() => setShowPrescriptions(!showPrescriptions)}
             >
@@ -332,15 +347,15 @@ export default function PatientDashboard() {
                 <Clock className="h-4 w-4 text-blue-600" />
                 <span>Test results collected</span>
               </li>
-             
+
 
               <ul className="space-y-2">
-              {careTeam.map((member, index) => (
-                <li key={index} className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-blue-600" />
-                  <span>Appointment with Dr. {member.firstName} {member.lastName} - {member.specialty}</span>
-                </li>
-              ))}
+                {careTeam.map((member, index) => (
+                  <li key={index} className="flex items-center space-x-2">
+                    <Users className="h-4 w-4 text-blue-600" />
+                    <span>Appointment with Dr. {member.firstName} {member.lastName} - {member.specialty}</span>
+                  </li>
+                ))}
               </ul>
 
               <li className="flex items-center space-x-2">
@@ -516,7 +531,7 @@ export default function PatientDashboard() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Appointment Date</Label>
-              <Input id="date" name="date" type="date" value={appointmentData.date} onChange={handleInputChange}/>
+              <Input id="date" name="date" type="date" value={appointmentData.date} onChange={handleInputChange} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="time">Preferred Time</Label>
@@ -529,7 +544,7 @@ export default function PatientDashboard() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="reason">Reason for Visit</Label>
-              <Input id="reason" name="reason" value={appointmentData.reason} onChange={handleInputChange} placeholder="Brief description of your concern"/>
+              <Input id="reason" name="reason" value={appointmentData.reason} onChange={handleInputChange} placeholder="Brief description of your concern" />
             </div>
             <Button type="submit" className="ml-auto">Book Appointment</Button>
           </form>
@@ -543,7 +558,7 @@ export default function PatientDashboard() {
       <header className="bg-white p-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Hospital className="h-6 w-6 text-blue-600" />
-          <span className="font-bold text-3xl">VIT MEDS</span>
+          <span className="font-bold text-3xl">MediCare</span>
         </div>
         <Button variant="outline" onClick={() => navigate('/')}>Sign Out</Button>
       </header>

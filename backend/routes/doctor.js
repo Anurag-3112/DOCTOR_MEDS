@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_jwt_secret');
+    const decoded = jwt.verify(token, 'secret_key');
     req.user = decoded;
     next();
   } catch (error) {
@@ -25,7 +25,7 @@ const auth = (req, res, next) => {
 
 router.get('/profile', auth, async (req, res) => {
   try {
-    const doctor = await Doctor.findById(req.user.id).select('-password');
+    const doctor = await Doctor.findById(req.user.userId).select('-password');
     if (!doctor) {
       return res.status(404).send({ error: 'Doctor not found' });
     }
@@ -39,7 +39,7 @@ router.get('/profile', auth, async (req, res) => {
 router.put('/profile', auth, async (req, res) => {
   try {
     const { firstName, lastName, email, specialty, licenseNumber, phoneNumber } = req.body;
-    const doctor = await Doctor.findById(req.user.id);
+    const doctor = await Doctor.findById(req.user.userId);
     if (!doctor) {
       return res.status(404).send({ error: 'Doctor not found' });
     }
@@ -71,7 +71,7 @@ router.get('/all', async (req, res) => {
 
 router.get('/patients-with-appointments', auth, async (req, res) => {
   try {
-    const doctorId = req.user.id;
+    const doctorId = req.user.userId;
     const appointments = await Appointment.find({ doctorId }).sort({ date: 1 });
     const patientIds = [...new Set(appointments.map(app => app.patientId.toString()))];
 
@@ -99,7 +99,7 @@ router.get('/patients-with-appointments', auth, async (req, res) => {
 router.get('/available-slots', auth, async (req, res) => {
   try {
     const { patientId, date } = req.query;
-    const doctorId = req.user.id; // Assuming the doctor is making the request
+    const doctorId = req.user.userId; // Assuming the doctor is making the request
 
     // Fetch booked appointments for the given doctor and date
     const bookedAppointments = await Appointment.find({ doctorId, date });
@@ -121,7 +121,7 @@ router.get('/available-slots', auth, async (req, res) => {
 router.post('/schedule-appointment', auth, async (req, res) => {
   try {
     const { patientId, date, time, reason } = req.body;
-    const doctorId = req.user.id; // Assuming the doctor is making the request
+    const doctorId = req.user.userId; // Assuming the doctor is making the request
 
     const appointment = new Appointment({
       patientId,
@@ -142,7 +142,7 @@ router.post('/schedule-appointment', auth, async (req, res) => {
 router.post('/prescribe-medication', auth, async (req, res) => {
   try {
     const { patientId, medication, dosage, frequency } = req.body;
-    const doctorId = req.user.id; // Assuming the doctor is making the request
+    const doctorId = req.user.userId; // Assuming the doctor is making the request
 
     console.log('Request body:', req.body);
     console.log('Doctor ID:', doctorId);
@@ -168,7 +168,7 @@ router.post('/prescribe-medication', auth, async (req, res) => {
 // Get all prescriptions
 router.get('/prescriptions', auth, async (req, res) => {
   try {
-    const prescriptions = await Prescription.find({ doctorId: req.user.id });
+    const prescriptions = await Prescription.find({ doctorId: req.user.userId });
     res.json(prescriptions);
   } catch (error) {
     console.error('Error fetching prescriptions:', error);
@@ -181,7 +181,7 @@ router.put('/prescriptions/:id', auth, async (req, res) => {
   try {
     const { medication, dosage, frequency } = req.body;
     const prescription = await Prescription.findOneAndUpdate(
-      { _id: req.params.id, doctorId: req.user.id },
+      { _id: req.params.id, doctorId: req.user.userId },
       { medication, dosage, frequency },
       { new: true }
     );
@@ -198,7 +198,7 @@ router.put('/prescriptions/:id', auth, async (req, res) => {
 // Delete a prescription
 router.delete('/prescriptions/:id', auth, async (req, res) => {
   try {
-    const prescription = await Prescription.findOneAndDelete({ _id: req.params.id, doctorId: req.user.id });
+    const prescription = await Prescription.findOneAndDelete({ _id: req.params.id, doctorId: req.user.userId });
     if (!prescription) {
       return res.status(404).send({ error: 'Prescription not found' });
     }
@@ -213,7 +213,7 @@ router.delete('/prescriptions/:id', auth, async (req, res) => {
 router.get('/prescriptions/:patientId', auth, async (req, res) => {
   try {
     const prescriptions = await Prescription.find({ 
-      doctorId: req.user.id,
+      doctorId: req.user.userId,
       patientId: req.params.patientId
     });
     res.json(prescriptions);
@@ -225,7 +225,7 @@ router.get('/prescriptions/:patientId', auth, async (req, res) => {
 
 router.get('/appointments', auth, async (req, res) => {
   try {
-    const doctorId = req.user.id;
+    const doctorId = req.user.userId;
     const today = new Date();
     today.setHours(0, 0, 0, 0);  // Set to start of day
     

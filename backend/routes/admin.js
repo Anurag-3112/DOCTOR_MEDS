@@ -5,8 +5,18 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import Appointment from '../models/Appointment.js';
+import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
+
+router.get('/dashboard', authMiddleware, (req, res) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Access denied' });
+  }
+
+  res.json({ message: 'Welcome Admin Dashboard' });
+});
+
 
 const auth = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
@@ -16,7 +26,7 @@ const auth = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_jwt_secret');
+    const decoded = jwt.verify(token, 'secret_key');
     req.user = decoded;
     next();
   } catch (error) {
@@ -64,7 +74,7 @@ router.post('/add-admin', auth, async (req, res) => {
 
 router.get('/profile', auth, async (req, res) => {
   try {
-    const admin = await Admin.findById(req.user.id).select('-password');
+    const admin = await Admin.findById(req.user.userId).select('-password');
     if (!admin) {
       return res.status(404).send({ error: 'Admin not found' });
     }
@@ -78,7 +88,7 @@ router.get('/profile', auth, async (req, res) => {
 router.put('/profile', auth, async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body;
-    const admin = await Admin.findById(req.user.id);
+    const admin = await Admin.findById(req.user.userId);
     if (!admin) {
       return res.status(404).send({ error: 'Admin not found' });
     }

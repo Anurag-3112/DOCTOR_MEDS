@@ -15,7 +15,7 @@ const auth = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_jwt_secret');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
     req.user = decoded;
     next();
   } catch (error) {
@@ -25,10 +25,13 @@ const auth = (req, res, next) => {
 
 router.get('/profile', auth, async (req, res) => {
   try {
+    // ✅ FIX: use req.user.id (matches jwt.sign({ id: user._id }))
     const patient = await Patient.findById(req.user.id).select('-password');
+
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
     }
+
     res.json(patient);
   } catch (error) {
     console.error(error);
@@ -39,6 +42,7 @@ router.get('/profile', auth, async (req, res) => {
 router.put('/profile', auth, async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body;
+    // ✅ FIX: use req.user.id
     const patient = await Patient.findById(req.user.id);
     if (!patient) {
       return res.status(404).send({ error: 'Patient not found' });
@@ -59,18 +63,27 @@ router.put('/profile', auth, async (req, res) => {
 router.post('/book-appointment', auth, async (req, res) => {
   try {
     const { doctorId, date, time, reason } = req.body;
+    // ✅ FIX: use req.user.id
+    const patientId = req.user.id;
+
     const appointment = new Appointment({
-      patientId: req.user.id,
+      patientId,
       doctorId,
-      date,
+      date: new Date(date),
       time,
       reason
     });
+
     await appointment.save();
-    res.status(201).json({ message: 'Appointment booked successfully', appointment });
+
+    res.status(201).json({
+      message: "Appointment booked successfully",
+      appointment
+    });
+
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: 'Server error' });
+    console.error("BOOK ERROR:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -90,20 +103,21 @@ router.get('/available-slots', auth, async (req, res) => {
 
 router.get('/appointments', auth, async (req, res) => {
   try {
+    // ✅ FIX: use req.user.id
     const patientId = req.user.id;
     const today = new Date();
-    today.setHours(0, 0, 0, 0);  // Set to start of day
-    
+    today.setHours(0, 0, 0, 0);
+
     const appointments = await Appointment.find({
       patientId,
       date: {
         $gte: today,
-        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) // End of day
+        // $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000)
       }
     })
       .populate('doctorId', 'firstName lastName')
       .sort({ time: 1 });
-    
+
     res.json(appointments);
   } catch (error) {
     console.error('Error fetching appointments:', error);
@@ -113,6 +127,7 @@ router.get('/appointments', auth, async (req, res) => {
 
 router.get('/care-team', auth, async (req, res) => {
   try {
+    // ✅ FIX: use req.user.id
     const patientId = req.user.id;
     const appointments = await Appointment.find({ patientId }).distinct('doctorId');
     const careTeam = await Doctor.find({ _id: { $in: appointments } }).select('firstName lastName specialty');
@@ -125,6 +140,7 @@ router.get('/care-team', auth, async (req, res) => {
 
 router.get('/prescriptions', auth, async (req, res) => {
   try {
+    // ✅ FIX: use req.user.id
     const patientId = req.user.id;
     const prescriptions = await Prescription.find({ patientId }).populate('doctorId', 'firstName lastName');
     res.json(prescriptions);

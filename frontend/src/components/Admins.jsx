@@ -64,7 +64,9 @@ const Select = ({ children, ...props }) => (
   </select>
 );
 
+
 export default function AdminDashboard() {
+  
   const [showDoctors, setShowDoctors] = useState(false);
   const [showPatients, setShowPatients] = useState(false);
   const [activeTab, setActiveTab] = useState('Dashboard');
@@ -702,7 +704,7 @@ export default function AdminDashboard() {
       <header className="bg-white p-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Hospital className="h-6 w-6 text-blue-600" />
-          <span className="font-bold text-3xl">VIT MEDS</span>
+          <span className="font-bold text-3xl">MediCare</span>
         </div>
         <Button variant="outline" onClick={() => navigate('/')}>Sign Out</Button>
       </header>

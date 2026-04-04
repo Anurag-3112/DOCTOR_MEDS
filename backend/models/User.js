@@ -5,12 +5,18 @@ const userSchema = new mongoose.Schema(
   {
     firstName: { 
       type: String, 
-      required: [true, 'First name is required'] 
+      required: function () {
+        return !this.googleId; 
+      }
     },
+
     lastName: { 
       type: String, 
-      required: [true, 'Last name is required'] 
+      required: function () {
+        return !this.googleId;
+      }
     },
+
     email: { 
       type: String, 
       required: [true, 'Email is required'],
@@ -18,11 +24,25 @@ const userSchema = new mongoose.Schema(
       trim: true,
       lowercase: true
     },
+
     password: { 
-      type: String, 
-      required: [true, 'Password is required'],
+      type: String,
+      required: function () {
+        return !this.googleId;
+      },
       minlength: [6, 'Password must be at least 6 characters']
     },
+
+    googleId: {
+      type: String,
+      default: null
+    },
+
+    profilePic: {
+      type: String,
+      default: null
+    },
+
     role: { 
       type: String, 
       required: true, 
@@ -37,6 +57,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', async function(next) {
   try {
+    if (!this.password) return next();
     if (!this.isModified('password')) return next();
     
     const salt = await bcrypt.genSalt(10);
@@ -47,8 +68,8 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-// Add method to compare passwords
 userSchema.methods.comparePassword = async function(candidatePassword) {
+  if (!this.password) return false;
   return await bcrypt.compare(candidatePassword, this.password);
 };
 

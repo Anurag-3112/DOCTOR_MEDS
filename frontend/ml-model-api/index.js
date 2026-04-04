@@ -1,6 +1,6 @@
 // var isStudent = true;
 // console.log(isStudent);
-// isStudent = "krishnam";
+// isStudent = "Anurag";
 // console.log(isStudent);
 
 // function greetName(name){
@@ -18,7 +18,7 @@
 //     );
 // }
 
-// console.log(message("krishnam"));
+// console.log(message("Anurag"));
 
 // let sum = (a,b)=>{
 //     return(
