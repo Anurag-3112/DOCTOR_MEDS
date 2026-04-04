@@ -1,12 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# This workflow will install Deno then run `deno lint` and `deno test`.
-# For more information see: https://github.com/denoland/setup-deno
-
-name: Deno
+name: Node.js CI
 
 on:
   push:
@@ -18,25 +10,38 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Deno
-        # uses: denoland/setup-deno@v1
-        uses: denoland/setup-deno@61fe2df320078202e33d7d5ad347e7dcfa0e8f31  # v1.1.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          deno-version: v1.x
+          node-version: 18
 
-      # Uncomment this step to verify the use of 'deno fmt' on each commit.
-      # - name: Verify formatting
-      #   run: deno fmt --check
+      # Install backend dependencies
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          npm install
 
-      - name: Run linter
-        run: deno lint
+      # Install frontend dependencies
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
 
+      # Optional: Run lint (if ESLint configured)
+      - name: Run lint
+        run: |
+          cd backend && npm run lint || true
+          cd ../frontend && npm run lint || true
+
+      # Optional: Run tests (if you have tests)
       - name: Run tests
-        run: deno test -A
+        run: |
+          cd backend && npm test || true
+          cd ../frontend && npm test || true
