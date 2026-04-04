@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="Doctor Meds Logo" style="width:80%; max-width:1000px; min-width:300px;" />
 </p> -->
 
-# 🏥 DOCTOR_MEDS 
+# MediCare - MERN Patient Management System
 
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-brightgreen)
@@ -12,19 +12,13 @@
 
 ---
 
-## 📚 Table of Contents
+## Overview
 
-- [📦 Installation](#-installation)
-- [🚀 Features](#-features)
-- [🔧 Technologies Used](#-technologies-used)
-- [📂 Project Structure](#-project-structure)
-- [📸 Demo / Screenshots](#-demo--screenshots)
-- [🛠️ Contributing](#️-contributing)
-
+MediCare is designed to streamline hospital workflows by enabling efficient management of patients, doctors, and administrative tasks. It ensures secure access, organized records, and smooth communication between stakeholders.
 
 ---
 
-## 🚀 Features
+## Features
 
 -  JWT-based user authentication and authorization
 -  Role-based access for Admins, Doctors, and Patients
@@ -39,7 +33,7 @@
 
 ---
 
-## 🔧 Technologies Used 
+## Technologies Used 
 
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB with Mongoose
@@ -50,7 +44,7 @@
 
 ---
 
-## 📦 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the repository:
 
@@ -71,6 +65,8 @@ PORT=5000
 MONGODB_URI=mongodb://localhost:27017/doctor_meds
 JWT_SECRET=your_jwt_secret
 ```
+Note: Replace the values with your own credentials. Never commit your .env file to version control.
+
 ### 4. Start the backend development server:
 
 ```bash
@@ -117,5 +113,5 @@ DOCTOR_MEDS/
 For any queries, feedback, or collaboration opportunities, feel free to reach out:
 
 👤 **Anurag Kumar**  
-📧 Email: [click here](mailto:ak7546824@gmail.com)  
+📧 Email: [email_to_anurag](mailto:kumar.anurag.connect@gmail.com)  
 🔗 GitHub: [@Anurag-3112](https://github.com/Anurag-3112)
