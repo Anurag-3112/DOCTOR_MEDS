@@ -38,7 +38,7 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch('http://localhost:5000/api/signup', {
+        const response = await fetch('http://localhost:5001/api/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -76,24 +76,24 @@ const SignUp = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-blue-800 text-left">First Name</label>
-                <input 
-                  id="firstName" 
-                  name="firstName" 
-                  value={formData.firstName} 
-                  onChange={handleChange} 
-                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1" 
+                <input
+                  id="firstName"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1"
                   required
                 />
                 {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
               </div>
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-blue-800 text-left">Last Name</label>
-                <input 
-                  id="lastName" 
-                  name="lastName" 
-                  value={formData.lastName} 
-                  onChange={handleChange} 
-                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1" 
+                <input
+                  id="lastName"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1"
                   required
                 />
                 {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
@@ -101,13 +101,13 @@ const SignUp = () => {
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-blue-800 text-left">Email</label>
-              <input 
-                id="email" 
-                name="email" 
-                type="email" 
-                value={formData.email} 
-                onChange={handleChange} 
-                className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1" 
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1"
                 required
               />
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -115,17 +115,17 @@ const SignUp = () => {
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-blue-800 text-left">Password</label>
               <div className="flex items-center">
-                <input 
-                  id="password" 
-                  name="password" 
-                  type={showPassword ? 'text' : 'password'} 
-                  value={formData.password} 
-                  onChange={handleChange} 
-                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1" 
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1"
                   required
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none focus:shadow-outline"
                   onClick={() => setShowPassword(!showPassword)}
                 >
@@ -137,17 +137,17 @@ const SignUp = () => {
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-blue-800 text-left">Confirm Password</label>
               <div className="flex items-center">
-                <input 
-                  id="confirmPassword" 
-                  name="confirmPassword" 
-                  type={showConfirmPassword ? 'text' : 'password'} 
-                  value={formData.confirmPassword} 
-                  onChange={handleChange} 
-                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1" 
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-400 focus:ring focus:ring-blue-400 focus:ring-opacity-50 pl-1"
                   required
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none focus:shadow-outline"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
@@ -156,8 +156,8 @@ const SignUp = () => {
               </div>
               {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
             </div>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Create Account
