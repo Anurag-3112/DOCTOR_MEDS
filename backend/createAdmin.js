@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import Admin from './models/Admin.js';
 
-const MONGO_URI = 'mongodb://localhost:27017/User';
+const MONGO_URI = process.env.MONGO_URI;
 
 async function connectDB() {
   try {
