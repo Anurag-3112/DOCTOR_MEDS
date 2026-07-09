@@ -1,39 +1,65 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
-const adminSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName:  { type: String, required: true },
-  email:     { type: String, required: true, unique: true },
-  password:  { type: String, required: true },
-  role:      { type: String, default: 'admin' },
-});
+const adminSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: [true, "First name is required"],
+      trim: true,
+      minlength: 2,
+    },
 
-// Hash password before saving
-adminSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
+    lastName: {
+      type: String,
+      required: [true, "Last name is required"],
+      trim: true,
+      minlength: 2,
+    },
 
-const Admin = mongoose.model('Admin', adminSchema);
-export default Admin;
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
 
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      select: false,
+    },
 
-const createAdmin = async () => {
-  try {
-    const newAdmin = new Admin({
-      firstName: 'Anurag',
-      lastName: 'Kumar',
-      email: 'anuragkumar@gmail.com',
-      password: 'Anurag1234`'
-    });
-
-    await newAdmin.save();
-    console.log('Admin created successfully!');
-  } catch (error) {
-    console.error('Error creating admin:', error.message);
+    role: {
+      type: String,
+      enum: ["admin"],
+      default: "admin",
+    },
+  },
+  {
+    timestamps: true,
   }
+);
+
+adminSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+adminSchema.methods.comparePassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
-createAdmin();
+const Admin = mongoose.model("Admin", adminSchema);
+
+export default Admin;
