@@ -24,7 +24,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('http://localhost:5001/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Login = () => {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/google",
+        "http://localhost:5001/api/auth/google",
         {
           token: credentialResponse.credential
         }
@@ -86,7 +86,7 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
-        
+
         {/* Header */}
         <div className="bg-blue-600 p-6 text-white">
           <h2 className="text-2xl font-bold text-center">Login to HealthCare Portal</h2>
@@ -94,18 +94,17 @@ const Login = () => {
         </div>
 
         <div className="p-6">
-          
+
           {/* Role Selector */}
           <div className="flex bg-blue-100 rounded-lg p-1 mb-6">
             {roles.map((role) => (
               <button
                 key={role.id}
                 onClick={() => setSelectedRole(role.id)}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition-colors ${
-                  selectedRole === role.id
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition-colors ${selectedRole === role.id
                     ? 'bg-blue-600 text-white'
                     : 'text-blue-600'
-                }`}
+                  }`}
               >
                 <role.icon size={16} />
                 <span>{role.label}</span>
@@ -115,7 +114,7 @@ const Login = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            
+
             <div>
               <label className="block text-lg font-medium text-gray-700 mb-1">
                 Email
