@@ -38,7 +38,7 @@ async function createAdmin() {
     });
 
     await admin.save();
-    console.log('✅ Admin created successfully');
+    console.log('Admin created successfully');
 
   } catch (error) {
     console.error('Error creating admin:', error);
