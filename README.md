@@ -8,7 +8,9 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-6.0+-brightgreen)
 ![Express](https://img.shields.io/badge/Express-4.x-lightgrey)
 
-> A complete RESTful API for managing hospital operations including appointments, prescriptions, user roles, doctor schedules & more.
+> A complete MERN-based Patient Management System for managing hospital operations, appointments, prescriptions, user roles, doctor schedules, and more.
+
+🌐 **Live Demo:** https://medicare-seven-phi.vercel.app/
 
 ---
 
