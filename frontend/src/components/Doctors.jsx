@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 const Button = ({ children, variant = 'primary', className = '', ...props }) => (
   <button
     className={`inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${variant === 'primary'
-        ? 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
-        : variant === 'outline'
-          ? 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
-          : 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
+      ? 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+      : variant === 'outline'
+        ? 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
+        : 'text-blue-600 border-blue-600 hover:bg-blue-50 focus:ring-blue-500'
       } ${className}`}
     {...props}
   >
@@ -103,7 +103,7 @@ export default function DoctorDashboard() {
     if (!patientId) return;
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/doctor/prescriptions/${patientId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/doctor/prescriptions/${patientId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -128,7 +128,7 @@ export default function DoctorDashboard() {
         navigate('/login');
         return;
       }
-      const response = await fetch('http://localhost:5001/api/doctor/profile', {
+      const response = await fetch(`${API_BASE_URL}/api/doctor/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -152,7 +152,7 @@ export default function DoctorDashboard() {
         navigate('/login');
         return;
       }
-      const response = await fetch('http://localhost:5001/api/doctor/patients-with-appointments', {
+      const response = await fetch(`${API_BASE_URL}/api/doctor/patients-with-appointments`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -176,7 +176,7 @@ export default function DoctorDashboard() {
         navigate('/login');
         return;
       }
-      const response = await fetch('http://localhost:5001/api/doctor/appointments', {
+      const response = await fetch(`${API_BASE_URL}/api/doctor/appointments`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -342,7 +342,7 @@ export default function DoctorDashboard() {
     const handleSave = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5001/api/doctor/profile', {
+        const response = await fetch(`${API_BASE_URL}/api/doctor/profile`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -476,7 +476,7 @@ export default function DoctorDashboard() {
       if (!patientId || !date) return;
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:5001/api/doctor/available-slots?patientId=${patientId}&date=${date}`, {
+        const response = await fetch(`${API_BASE_URL}/api/doctor/available-slots?patientId=${patientId}&date=${date}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -509,7 +509,7 @@ export default function DoctorDashboard() {
       if (window.confirm('Are you sure you want to delete this prescription?')) {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://localhost:5001/api/doctor/prescriptions/${prescriptionId}`, {
+          const response = await fetch(`${API_BASE_URL}/api/doctor/prescriptions/${prescriptionId}`, {
             method: 'DELETE',
             headers: {
               'Authorization': `Bearer ${token}`
@@ -536,8 +536,8 @@ export default function DoctorDashboard() {
         try {
           const token = localStorage.getItem('token');
           const url = appointmentData.prescriptionId
-            ? `http://localhost:5001/api/doctor/prescriptions/${appointmentData.prescriptionId}`
-            : 'http://localhost:5001/api/doctor/prescribe-medication';
+            ? `${API_BASE_URL}/api/doctor/prescriptions/${appointmentData.prescriptionId}`
+            : `${API_BASE_URL}/api/doctor/prescribe-medication`;
           const method = appointmentData.prescriptionId ? 'PUT' : 'POST';
           const response = await fetch(url, {
             method,
@@ -574,7 +574,7 @@ export default function DoctorDashboard() {
       } else if (selectedAction === 'schedule-appointment') {
         try {
           const token = localStorage.getItem('token');
-          const response = await fetch('http://localhost:5001/api/doctor/schedule-appointment', {
+          const response = await fetch(`${API_BASE_URL}/api/doctor/schedule-appointment`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
