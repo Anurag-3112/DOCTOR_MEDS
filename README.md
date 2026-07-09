@@ -61,7 +61,7 @@ npm install
 ### 3. Configure backend environment variables: Create a .env file inside the backend/ folder and add the following:
 
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/doctor_meds
 JWT_SECRET=your_jwt_secret
 ```
