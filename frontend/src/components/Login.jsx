@@ -24,7 +24,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5001/api/login', {
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Login = () => {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       const res = await axios.post(
-        "http://localhost:5001/api/auth/google",
+        `${API_BASE_URL}/api/auth/google`,
         {
           token: credentialResponse.credential
         }
@@ -102,8 +102,8 @@ const Login = () => {
                 key={role.id}
                 onClick={() => setSelectedRole(role.id)}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition-colors ${selectedRole === role.id
-                    ? 'bg-blue-600 text-white'
-                    : 'text-blue-600'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-blue-600'
                   }`}
               >
                 <role.icon size={16} />
